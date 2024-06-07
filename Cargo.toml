@@ -1,0 +1,18 @@
+[package]
+name = "i_computation"
+version = "0.0.1"
+authors = ["Nail Sharipov <nailxsharipov@gmail.com>"]
+edition = "2021"
+description = "Make your GPU computations easy using wgpu. Provides a sugar API and a common pipeline for computational tasks, focusing solely on computation without rendering. Ideal for developers seeking efficient, computation-focused GPU operations.."
+license = "MIT"
+repository = "https://github.com/iShape-Rust/iComputation.git"
+
+
+[dependencies]
+wgpu = "^0.20"
+pollster = "^0.3"
+bytemuck = { version = "^1.16.0", features = ["derive"] }
+futures = "0.3.30"
+
+[dev-dependencies]
+rand = { version = "0.8.5", features = [] }
