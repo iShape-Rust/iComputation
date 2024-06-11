@@ -15,6 +15,7 @@ impl GpuContext {
         let instance = wgpu::Instance::default();
 
         let adapter = instance.request_adapter(&Default::default()).await.unwrap();
+        println!("Using adapter: {:?}", adapter.get_info());
         let features = adapter.features();
         let (device, queue) = adapter
             .request_device(

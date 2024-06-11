@@ -1,4 +1,4 @@
-use wgpu::BufferUsages;
+use wgpu::{BindingType, BufferUsages};
 use crate::buffer::BufferMode::Read;
 
 pub(super) struct BufferLayout {
@@ -32,7 +32,22 @@ pub enum BufferMode {
 }
 
 impl BufferLayout {
-    pub(super) fn read_only(&self) -> bool {
-        self.mode == Read
+    pub(super) fn binding_type(&self) -> BindingType {
+        match self.buffer_type {
+            BufferType::Uniform => {
+                BindingType::Buffer {
+                    ty: wgpu::BufferBindingType::Uniform,
+                    has_dynamic_offset: false,
+                    min_binding_size: None,
+                }
+            }
+            BufferType::Storage => {
+                BindingType::Buffer {
+                    ty: wgpu::BufferBindingType::Storage { read_only: self.mode == Read },
+                    has_dynamic_offset: false,
+                    min_binding_size: None,
+                }
+            }
+        }
     }
 }

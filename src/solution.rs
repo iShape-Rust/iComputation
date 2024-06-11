@@ -68,15 +68,16 @@ impl Solution<'_> {
         self.buffer_holders.insert(index, holder);
     }
 
-    pub fn bind_size_buffer(&mut self, index: usize, size: usize, context: &GpuContext) {
+
+    pub fn bind_size_buffer<A>(&mut self, index: usize, count: usize, context: &GpuContext) {
+        let size = (count * std::mem::size_of::<A>()) as u64;
         let layout = &self.solver.buffer_layouts[index];
 
-        if layout.mode != BufferMode::Write {
+        if layout.mode == BufferMode::Read {
             panic!("use bind_data_buffer for read and readwrite buffer")
         }
 
         let usage = layout.buffer_type.usage();
-        let size = size as u64;
 
         let input = context.device.create_buffer(&wgpu::BufferDescriptor {
             label: None,

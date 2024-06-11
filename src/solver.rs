@@ -30,8 +30,8 @@ impl SolverBuilder {
         self
     }
 
-    pub fn add_uniform(mut self, mode: BufferMode) -> Self {
-        self.buffer_layouts.push(BufferLayout { buffer_type: crate::buffer::BufferType::Uniform, mode });
+    pub fn add_uniform(mut self) -> Self {
+        self.buffer_layouts.push(BufferLayout { buffer_type: crate::buffer::BufferType::Uniform, mode: BufferMode::ReadWrite });
         self
     }
 
@@ -52,11 +52,7 @@ impl SolverBuilder {
                 BindGroupLayoutEntry {
                     binding: i as u32,
                     visibility: wgpu::ShaderStages::COMPUTE,
-                    ty: wgpu::BindingType::Buffer {
-                        ty: wgpu::BufferBindingType::Storage { read_only: el.read_only() },
-                        has_dynamic_offset: false,
-                        min_binding_size: None,
-                    },
+                    ty: el.binding_type(),
                     count: None,
                 }
         ).collect();

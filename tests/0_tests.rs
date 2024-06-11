@@ -9,7 +9,7 @@ mod tests {
     fn test_hello_world() {
         let context = GpuContext::new_sync();
         let solver = SolverBuilder::new()
-            .set_shader(include_str!("shader.wgsl"), "main")
+            .set_shader(include_str!("shader_0.wgsl"), "main")
             .add_storage(BufferMode::ReadWrite)
             .build(&context);
 
